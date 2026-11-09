@@ -338,3 +338,45 @@ Esta documentación define el comportamiento esperado del módulo Costos.\
 - Contrastar los nombres de controles y campos usados históricamente con el formulario real antes de corregir identificadores técnicos.
 
 Esta guía de consulta **no reemplaza ni modifica** las reglas normativas anteriores. Para localizar los controles, vuelve a la [guía visual](README.md).
+
+---
+
+## Ensayo reproducible: aislamiento de ambientes y referencias en Costos
+
+Este procedimiento convierte en **casos verificables**, sin modificarlas, las reglas históricas de los apartados **2 (cliente y proyecto), 3–5 (archivos y notas) y 7 (ambientes)**. Busca detectar mezcla de materia prima entre ambientes, sustitución accidental del cliente activo por datos importados y alteraciones no solicitadas de las notas globales.
+
+{% hint style="warning" %}
+**Prueba funcional pendiente:** lo siguiente es un protocolo para una ejecución supervisada en Windows, **no** un resultado observado ni una garantía de implementación. No se ha ejecutado en esta intervención. Las expectativas proceden de la especificación normativa histórica; cualquier discrepancia requiere evidencia del código y del formulario real.
+{% endhint %}
+
+### Preparación controlada
+
+1. Usa una **instalación o entorno de prueba autorizado**, con un cliente activo de prueba. No utilices presupuestos vigentes, datos privados de terceros ni una carpeta compartida de producción.
+2. Respalda íntegramente los archivos existentes de `ArchivosCliente` —en particular `NotasGlobales.xml`, `MargenProduccion.xml` y `MargenOperativo.xml`, si existen— y conserva copias de los XML de Costos originales. No edites manualmente sus estructuras para forzar el ensayo.
+3. Prepara **dos XML de Costos válidos y compatibles con la versión en prueba**, del mismo proyecto de ensayo y asociados a dos ambientes identificables (por ejemplo, `COCINA-ENSAYO` y `CLOSET-ENSAYO`). Cada ambiente debe tener un listado de materia prima distinguible; de ser posible, incluye una descripción común con **cantidades diferentes**.
+4. Registra antes de comenzar: versión de Cabinet Report, usuario de prueba, cliente activo visible, identificación del proyecto, nombres de ambos archivos y copia o captura del estado inicial de `NotasGlobales.xml`. **No se necesitan precios reales** para esta verificación.
+
+### Secuencia de prueba
+
+1. Abre **Costos** y registra por separado el **cliente activo de la instalación** y el **proyecto** que aparece al cargar el primer XML. Comprueba que la referencia leída del archivo se interprete como proyecto, sin reemplazar la identidad del cliente activo descrita en el apartado 2.
+2. Carga el XML del ambiente A; selecciona ese ambiente y registra sus descripciones y cantidades visibles en **Materia Prima**.
+3. Carga el XML del ambiente B mediante la opción documentada de **Cargar archivos de Costos XML**. Selecciona B y registra su listado. Si tu versión admite selección múltiple, también puedes repetir la prueba cargando ambos XML juntos en una sesión limpia.
+4. Alterna **A → B → A** y compara los registros con los de los pasos anteriores. Los materiales propios de B no deben aparecer en A ni viceversa; un artículo con igual descripción no justifica mezclar sus cantidades.
+5. **Solo en el entorno de prueba y sobre datos desechables**, modifica una cantidad identificable en A, cambia a B y vuelve a A. Según el apartado 7, B debe permanecer independiente y A debe conservar la modificación al alternar entre ambientes; esto **no** demuestra persistencia tras cerrar la aplicación.
+6. Comprueba que la carga de los XML de proyecto no haya sustituido las **Notas Globales** guardadas para el cliente ni cambiado los archivos de `ArchivosCliente` sin una acción explícita. Si no había notas iniciales, registra esa condición y no declares el control conforme por ausencia de datos.
+7. Finaliza **sin guardar encima de los XML originales**, conserva las capturas y restaura el entorno de prueba desde el respaldo cuando corresponda.
+
+### Registro de resultados
+
+| Control | Evidencia mínima | Criterio para marcar CONFORME |
+| --- | --- | --- |
+| **C-01 · Cliente y proyecto** | Cliente activo y campo de proyecto antes/después de cargar | La referencia importada no sustituye al cliente activo. |
+| **C-02 · Separación A/B** | Captura de materia prima de A y de B después de importar ambos | Cada ambiente muestra sus propias partidas y cantidades, sin mezcla. |
+| **C-03 · Alternancia y edición** | Capturas A → B → A con modificación controlada | El cambio en A no altera B y se conserva en A durante la alternancia. |
+| **C-04 · Custodia global** | Copia/registro previo y posterior de `NotasGlobales.xml` | La importación no sustituye ni sobrescribe las notas globales sin acción solicitada. |
+
+Para **cada control**, consigna **CONFORME**, **NO CONFORME** o **NO EJECUTADO**. Una condición sin datos, una opción ausente o un paso omitido **no** equivale a conformidad. Ante un resultado no conforme, registra el paso exacto, entradas usadas, resultado esperado, resultado observado, capturas y versión de la aplicación; **no corrijas la discrepancia reescribiendo las reglas históricas**.
+
+{% hint style="info" %}
+**Límites de la evidencia:** este ensayo no certifica cálculos económicos, precios, fórmulas, acceso entre clientes, integridad de XML externos ni persistencia tras reiniciar. La validación documental de GitHub tampoco acredita la ejecución en Windows.
+{% endhint %}
