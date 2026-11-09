@@ -1,6 +1,16 @@
+---
+description: Especificación normativa histórica del módulo Costos; alcance, cliente, proyecto, archivos, notas y ambientes.
+---
+
 # Módulo Costos
 
-## Módulo Costos – Documentación Técnica (Completa y Actualizada)
+**Cómo consultar esta documentación:** [Guía de interfaz y capturas](README.md) · **Reglas normativas** (esta página).
+
+{% hint style="warning" %}
+**Alcance de la verificación:** el texto histórico menciona enero de 2026. La fecha no demuestra por sí sola que las reglas estén implementadas en la versión actual. Los apartados 6 y 8 al 13 contienen el marcador «se mantiene íntegro», en lugar de su desarrollo: requieren cotejo con el código y pruebas funcionales antes de considerarse completos.
+{% endhint %}
+
+## Especificación normativa del Módulo Costos
 
 > **Aplicación:** Cabinet Report\
 > **Módulo:** Costos\
@@ -307,3 +317,24 @@ Cada ambiente mantiene:
 
 Esta documentación define el comportamiento esperado del módulo Costos.\
 **Cualquier cambio funcional debe documentarse aquí antes de tocar el código.**
+
+
+***
+
+## Guía de consulta y trazabilidad
+
+| Tema | Dónde consultarlo | Precaución |
+| --- | --- | --- |
+| Controles y capturas de pantalla | [Guía de interfaz](README.md) | Descripción histórica; debe comprobarse con la versión instalada. |
+| Cliente activo y referencia de proyecto | Apartados 2 y 5 | Son conceptos distintos en esta especificación. |
+| Archivos de notas y márgenes | Apartados 3 y 4 | Incluye nombres, rutas y estructura XML. |
+| Independencia de ambientes | Apartado 7 | Conserva las reglas normativas sin cambios. |
+| Márgenes y operaciones mencionadas sin detalle | Apartados 6 y 8 al 13 | Los marcadores «se mantiene íntegro» no constituyen procedimientos completos. |
+
+### Contrastes pendientes
+
+- Verificar contra el código fuente y en Windows las reglas atribuidas a enero de 2026; no se han ejecutado estas pruebas en la presente edición.
+- Completar con evidencia los apartados 6 y 8 al 13, sin inventar procedimientos ni modificarlos antes de la validación.
+- Contrastar los nombres de controles y campos usados históricamente con el formulario real antes de corregir identificadores técnicos.
+
+Esta guía de consulta **no reemplaza ni modifica** las reglas normativas anteriores. Para localizar los controles, vuelve a la [guía visual](README.md).
