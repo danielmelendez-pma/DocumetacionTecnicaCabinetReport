@@ -1,4 +1,4 @@
 # Table of contents
 
-* [FrmCostos.vb](README.md)
-* [Módulo Costos](modulo-costos.md)
+* [Costos: guía de interfaz](README.md)
+* [Módulo Costos: especificación técnica](modulo-costos.md)
